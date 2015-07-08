@@ -13,3 +13,5 @@ nav span 				{ margin: 0px 10px 0px 0px; }
 #foto					{ width: 123px; border: 1px solid #00a; }
 #text-left				{ float: left; }
 #text-left > p 			{ text-align: left; }
+nav span 			{ margin: 0px 10px 0px 0px;}
+#ErrorMsgs		{ color: #f61; font-size: smaller;}
