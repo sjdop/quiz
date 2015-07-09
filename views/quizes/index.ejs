@@ -1,11 +1,23 @@
 <form method="get" action="/quizes">
+	<select name="tema">
+	  <option value="otro" selected>Otro</option>
+	  <option value="humanidades">Humanidades</option>
+	  <option value="ocio">Ocio</option>
+	  <option value="ciencia">Ciencia</option>
+	  <option value="tecnologia">Tecnología</option>
+	</select>
 	<label>Busqueda</label>
 	<input type="text" name="search" placeholder="buscar">
 	<input type="submit" value="Buscar">
 </form>
 <table>
+	<tr>
+		<td><b>Tema</b></td>
+		<td><b>Preguntas</b></td>
+	</tr>
 <% var i; for ( i=0; i < quizes.length; i++ ) { %>
 	<tr>
+		<td><b><%= quizes[i].tema.toUpperCase() %></b></td>
 		<td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
 		<td><a href="quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
 		<td>
