@@ -1,7 +1,10 @@
 var models = require('../models/models.js');
 
 exports.load = function(req, res, next, quizId) {
-	models.Quiz.find(quizId).then(
+	models.Quiz.find({
+			where: { id: Number(quizId) },
+			include: [{ model: models.Comment }] 
+		}).then(
 		function(quiz) {
 			if ( quiz ) {
 				req.quiz = quiz;
@@ -83,8 +86,6 @@ exports.update = function(req, res) {
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
 	req.quiz.tema = req.body.quiz.tema;
-
-	console.log(req.quiz);
 
 	var errors = req.quiz.validate();
 	if(errors) {
