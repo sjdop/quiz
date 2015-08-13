@@ -76,5 +76,5 @@ function onError(error) {
  */
 
 function onListening() {
-  debug('Listening on port ' + serverSecure.address().port);
+  debug('Listening on port ' + server.address().port);
 }
