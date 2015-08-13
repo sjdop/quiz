@@ -20,7 +20,6 @@ exports.load = function(req, res, next, commentId) {
 
 // GET /quizes/:quizId/comments/new
 exports.new = function(req, res) {
-	console.log(req.params);
 	res.render('comments/new.ejs', {quizid: req.params.quizId, errors: []});
 };
 
@@ -30,23 +29,17 @@ exports.create = function(req, res) {
 			{ texto: req.body.comment.texto,
 			  QuizId: req.params.quizId
 			});
-
-	var errors = comment.validate();
-	if(errors) {
-		var i = 0;
-		var errores = new Array();
-		for(var prop in errors) {
-			errores[i++] = { message: errors[prop]};
+	comment.validate().then(function(err) {
+		if(err) {
+			res.render('comments/new', {comment: comment, quizid: req.params.quizId, errors: err.errors});
+		} else {
+			comment.save().then(
+				function() {
+					console.log(comment);
+					res.redirect('/quizes/' + req.params.quizId);
+				});
 		}
-		res.render('comments/new.ejs', {comment: comment, quizid: req.params.quizId, errors: errores});
-	} else {
-		comment.save()
-		.then(
-			function() {
-				console.log(comment);
-				res.redirect('/quizes/' + req.params.quizId)
-			});
-	}
+	}).catch(function(error) { next(error)});
 }
 
 // GET /quizes/:quizId/comments/:commentId/publish

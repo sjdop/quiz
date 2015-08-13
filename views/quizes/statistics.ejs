@@ -1,0 +1,5 @@
+<p>Numero de preguntas: <b><%= statistics.cant_questions %></b></p><br/>
+<p>Numero de comentarios totales: <b><%= statistics.cant_comments %></b></p><br/>
+<p>Numero medio de comentarios por pregunta: <b><%= statistics.cant_questions !== 0 ? Math.floor(statistics.cant_comments / statistics.cant_questions) : 0 %></b></p><br/>
+<p>Numero de preguntas sin comentarios: <b><%= statistics.cant_questions - statistics.cant_with_comments %></b></p><br/>
+<p>Numero de preguntas con comentarios: <b><%= statistics.cant_with_comments %></b></p><br/>

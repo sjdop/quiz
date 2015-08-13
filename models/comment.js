@@ -9,6 +9,13 @@ module.exports = function(sequelize, DataTypes) {
 					type: DataTypes.BOOLEAN,
 					defaultValue: false
 				}
-			}
+			},
+				{
+					classMethods: {	
+						countCommented: function () {
+							return this.aggregate('quizId', 'count', { distinct: true });
+						}	
+					}
+				}
 		);
 }

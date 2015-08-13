@@ -59,22 +59,17 @@ exports.new = function(req, res) {
 
 exports.create = function(req, res) {
 	var quiz = models.Quiz.build( req.body.quiz );
-	
-	var errors = quiz.validate();
-	if(errors) {
-		var i = 0;
-		var errores = new Array();
-		for(var prop in errors) {
-			errores[i++] = { message: errors[prop]};
+	quiz.validate().then(function(err){
+		if (err) {
+			res.render('quizes/new', {quiz: quiz, errors: err.errors});
 		}
-		res.render('quizes/new', {quiz: quiz, errors: errores});
-	} else {
-		quiz.save({fields: ["pregunta", "respuesta", "tema"]})
-		.then(
-			function() {
-				res.redirect('/quizes');
-			})
-	}
+		else {
+			quiz.save({fields: ["pregunta", "respuesta", "tema"]}).then(
+				function(){
+					res.redirect('/quizes');
+			});	
+		}
+	}).catch(function(error) { next(error); });
 };
 
 exports.edit = function(req, res) {
@@ -87,18 +82,16 @@ exports.update = function(req, res) {
 	req.quiz.respuesta = req.body.quiz.respuesta;
 	req.quiz.tema = req.body.quiz.tema;
 
-	var errors = req.quiz.validate();
-	if(errors) {
-		var i = 0;
-		var errores = new Array();
-		for(var prop in errors) {
-			errores[i++] = { message: errors[prop]};
+	req.quiz.validate().then(function(err) {
+		if(err) {
+			res.render('quizes/edit', { quiz: req.quiz, errors: err.errors});
+		} else {
+			req.quiz.save( {fields: ["pregunta", "respuesta", "tema"]})
+				.then( function() {
+					res.redirect('/quizes');
+				});
 		}
-		res.render('quizes/edit', { quiz: req.quiz, errors: errores});
-	} else {
-		req.quiz.save( {fields: ["pregunta", "respuesta","tema"]})
-		.then( function() { res.redirect('/quizes')});
-	}
+	});
 }
 
 exports.destroy = function(req, res) {
