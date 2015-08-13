@@ -30,7 +30,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-//var server = http.createServer(app);
+var server = http.createServer(app);
 
 /*var serverSecure = https.createServer(options, app);
  serverSecure.listen(8443, function() {
