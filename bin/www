@@ -6,15 +6,15 @@
 
 var app = require('../app');
 var debug = require('debug')('quiz:server');
-//var http = require('http');
+var http = require('http');
 
 var fs = require('fs');
-var https = require('https');
+//var https = require('https');
 
-var options = {
+/*var options = {
   key: fs.readFileSync('certs/quiz-2015-key.pem').toString(),
   cert: fs.readFileSync('certs/quiz-2015-cert.pem').toString()
-};
+};*/
 
 
 /**
@@ -32,20 +32,20 @@ app.set('port', port);
 
 //var server = http.createServer(app);
 
-var serverSecure = https.createServer(options, app);
+/*var serverSecure = https.createServer(options, app);
  serverSecure.listen(8443, function() {
    debug('Express server listening on port ' + serverSecure.address().port);
    console.log(serverSecure.address().port);
  });
 serverSecure.on('error', onError);
-serverSecure.on('listening', onListening);
+serverSecure.on('listening', onListening);*/
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-//server.listen(port);
-//server.on('error', onError);
-//server.on('listening', onListening);
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
 
 /**
  * Event listener for HTTP server "error" event.
